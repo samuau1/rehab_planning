@@ -192,14 +192,14 @@ const local = {
 const db = {
   async load(){
     if(CLOUD){
-      const [exercises, workouts, sets] = await Promise.all([fetchAll("exercises","sort_order"), fetchAll("workouts","date"), fetchAll("set_logs","created_at")]);
+      const [exercises, workouts, sets] = await Promise.all([fetchAll("rehab_exercises","sort_order"), fetchAll("rehab_workouts","date"), fetchAll("rehab_set_logs","created_at")]);
       return {exercises, workouts, sets};
     }
     return local.load();
   },
   async saveExercise(ex){
     if(CLOUD){
-      const { data, error } = await sb.from("exercises").upsert(ex).select().single();
+      const { data, error } = await sb.from("rehab_exercises").upsert(ex).select().single();
       if(error) throw error; return data;
     }
     const d = local.load(); ex.id ||= uid(); ex.created_at ||= new Date().toISOString();
@@ -208,26 +208,26 @@ const db = {
   },
   async ensureWorkout(date){
     if(CLOUD){
-      const { data, error } = await sb.from("workouts").upsert({date},{onConflict:"user_id,date"}).select().single();
+      const { data, error } = await sb.from("rehab_workouts").upsert({date},{onConflict:"user_id,date"}).select().single();
       if(error) throw error; return data;
     }
     const d = local.load(); let w = d.workouts.find(x=>x.date===date);
     if(!w){ w = {id:uid(), date, note:"", feel:null}; d.workouts.push(w); local.save(d); } return w;
   },
   async patchWorkout(id, patch){
-    if(CLOUD){ const { error } = await sb.from("workouts").update(patch).eq("id",id); if(error) throw error; return; }
+    if(CLOUD){ const { error } = await sb.from("rehab_workouts").update(patch).eq("id",id); if(error) throw error; return; }
     const d = local.load(); Object.assign(d.workouts.find(w=>w.id===id), patch); local.save(d);
   },
   async addSet(row){
-    if(CLOUD){ const { data, error } = await sb.from("set_logs").insert(row).select().single(); if(error) throw error; return data; }
+    if(CLOUD){ const { data, error } = await sb.from("rehab_set_logs").insert(row).select().single(); if(error) throw error; return data; }
     const d = local.load(); const r = {...row, id:uid(), created_at:new Date().toISOString()}; d.sets.push(r); local.save(d); return r;
   },
   async patchSet(id, patch){
-    if(CLOUD){ const { error } = await sb.from("set_logs").update(patch).eq("id",id); if(error) throw error; return; }
+    if(CLOUD){ const { error } = await sb.from("rehab_set_logs").update(patch).eq("id",id); if(error) throw error; return; }
     const d = local.load(); Object.assign(d.sets.find(s=>s.id===id), patch); local.save(d);
   },
   async delSet(id){
-    if(CLOUD){ const { error } = await sb.from("set_logs").delete().eq("id",id); if(error) throw error; return; }
+    if(CLOUD){ const { error } = await sb.from("rehab_set_logs").delete().eq("id",id); if(error) throw error; return; }
     const d = local.load(); d.sets = d.sets.filter(s=>s.id!==id); local.save(d);
   },
 };

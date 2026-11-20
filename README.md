@@ -5,13 +5,13 @@ Static files only, so it hosts on GitHub Pages. Data lives in Supabase (or in th
 
 ## Setup (≈10 minutes)
 
-1. **Supabase**: create a project (or reuse one), open *SQL Editor*, paste `schema.sql`, run it.
+1. **Supabase**: create a project (or reuse an existing one: the tables are prefixed `rehab_` so they won't clash with other apps; leave "Allow new users to sign up" on if other apps share the project), open *SQL Editor*, paste `schema.sql`, run it.
    Then *Authentication → Providers → Email*: keep it enabled. Optional: turn off "Confirm email" for faster sign-up.
 2. **Keys**: put *Project URL* and *anon public key* (Project Settings → API) in `config.js`.
    The anon key is meant to be public; the Row Level Security policies in `schema.sql` keep your rows private.
 3. **GitHub Pages**: push this folder to a repo → Settings → Pages → deploy from `main` / root.
-4. **Create your account** in the app (email + password). After that, in Supabase turn off *Allow new users to sign up*
-   so nobody else can register on your public URL.
+4. **Create your account** in the app (email + password), or sign in with an existing account from the same Supabase project.
+   If this project is dedicated to this app, you can then turn off *Allow new users to sign up*.
 5. **On your phone**: open the Pages URL → Share → *Add to Home Screen* (iOS) or *Install app* (Android).
 
 The first time you sign in, your 5 exercises from the physio's sheet are created automatically; edit them in Settings.
