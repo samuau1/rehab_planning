@@ -17,12 +17,18 @@ Static files only, so it hosts on GitHub Pages. Data lives in Supabase (or in th
 The first time you sign in, your 5 exercises from the physio's sheet are created automatically; edit them in Settings.
 
 ## Features
-- Today: tap an exercise, set reps/weight (pre-filled from last time), "Log set" → rest timer starts
-- Rest timer survives screen lock, beeps + vibrates, ±15 s, per-exercise rest times, screen stays awake
+- **Focus mode**: tap an exercise for a full-screen view with the physio's illustration, instructions, big set circles, reps/weight steppers and the rest timer
+- **Rest timer** survives screen lock, beeps and vibrates, ±15 s, per-exercise rest times, screen stays awake
+- **Mini calendar** on the home screen: filled = full session, light = partial; tap a day to view or backfill it
+- **Gamification** (no streak guilt): XP and levels (10 XP per set, 50 per finished session), a weekly-goal streak so rest days never break it,
+  12 badges, "new personal best" alerts and a confetti celebration when you finish a session
 - Progression hint when you hit the top of the rep range on every set
-- Backfill any past day (‹ › arrows or History calendar); edit/delete logged sets; extra sets with +
 - How-it-felt rating + note per session (handy for the next physio visit)
 - Progress: sessions per week, weight / total reps trend per exercise
-- Export to CSV; edit, reorder, hide exercises
+- Export to CSV; edit, reorder, hide exercises; light and dark mode
 
+XP, levels and badges are calculated from your logged sets, so they need no extra tables.
+The weekly goal and default rest time are stored on the device.
 Without keys in `config.js` it runs in local-only mode (good for trying it out).
+
+> Updating from the first version? Re-run `schema.sql` once: it adds the `image` column (safe to run again).

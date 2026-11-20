@@ -10,6 +10,7 @@ create table if not exists rehab_exercises (
   reps_max int not null default 12,
   uses_weight boolean not null default false,
   rest_seconds int not null default 60,
+  image text,
   sort_order int not null default 0,
   archived boolean not null default false,
   created_at timestamptz not null default now()
@@ -46,3 +47,6 @@ alter table rehab_set_logs  enable row level security;
 create policy "own rows" on rehab_exercises for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "own rows" on rehab_workouts  for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "own rows" on rehab_set_logs  for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- If you ran an earlier version of this file, this adds the new image column (safe to run again):
+alter table rehab_exercises add column if not exists image text;
