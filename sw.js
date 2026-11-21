@@ -1,5 +1,5 @@
-const CACHE = "rehab-v2";
-const SHELL = ["./", "index.html", "config.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "img/ex1.webp", "img/ex2.webp", "img/ex3.webp", "img/ex4.webp", "img/ex5.webp"];
+const CACHE = "rehab-v3";
+const SHELL = ["./", "index.html", "config.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-180.png", "img/ex1.webp", "img/ex2.webp", "img/ex3.webp", "img/ex4.webp", "img/ex5.webp"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
